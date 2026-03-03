@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADRIJA MONDAL</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+body{
+    margin:0;
+    padding:0;
+    background:black;
+    font-family:sans-serif;
+    overflow:hidden;
+    text-align:center;
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+
+.container{
+    position:relative;
+    padding-top:40px;
+}
+
+.profile-pic{
+    width:190px;
+    height:190px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #ff1493;
+    box-shadow:0 0 40px #ff1493;
+    margin-bottom:25px;
+}
+
+/* PURPLE NAME */
+.name{
+    font-size:45px;
+    font-weight:bold;
+    margin-bottom:35px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:#a020f0; /* PURPLE */
+    animation:glowPulse 2s infinite alternate;
+}
+
+@keyframes glowPulse{
+    0%{ text-shadow:0 0 10px #a020f0; }
+    100%{ text-shadow:0 0 30px #a020f0,0 0 60px #a020f0; }
+}
+
+/* GREEN BUTTONS */
+a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin:15px auto;
+    padding:15px;
+    width:300px;
+    text-decoration:none;
+    font-weight:bold;
+    letter-spacing:2px;
+    border-radius:8px;
+    text-transform:uppercase;
+    background:black;
+    color:#00ff00;
+    border:2px solid #00ff00;
+    box-shadow:0 0 20px #00ff00;
+    transition:0.3s;
+}
+
+a:hover{
+    background:#00ff00;
+    color:black;
+    box-shadow:0 0 40px #00ff00;
+    transform:scale(1.07);
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="heartCanvas"></canvas>
+
+<div class="container">
+
+    <img src="IMG_1493.jpeg" class="profile-pic">
+
+    <div class="name">ADRIJA MONDAL</div>
+
+    <a href="https://www.youtube.com/@deadly_puku" target="_blank">
+        <i class="fab fa-youtube"></i> YOUTUBE CHANNEL
+    </a>
+
+    <a href="https://facebook.com/deadlypuku" target="_blank">
+        <i class="fab fa-facebook"></i> FACEBOOK PAGE
+    </a>
+
+    <a href="https://www.instagram.com/deadly_puku/?igsh=dWh5Z3I0aDF3Z2xt" target="_blank">
+        <i class="fab fa-instagram"></i> INSTAGRAM
+    </a>
+
+    <a href="https://www.facebook.com/share/1SVES9SjLU/?mibextid=wwXIfr" target="_blank">
+        <i class="fab fa-facebook"></i> FACEBOOK PROFILE
+    </a>
+
+</div>
+
+<script>
+var canvas=document.getElementById("heartCanvas");
+var ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+var hearts=[];
+
+function Heart(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height;
+    this.size=Math.random()*15+8;
+    this.speed=Math.random()*1.2+0.5;
+}
+
+for(var i=0;i<70;i++){
+    hearts.push(new Heart());
+}
+
+function drawHeart(x,y,size){
+
+    ctx.shadowColor="#ff1493";
+    ctx.shadowBlur=20;
+
+    ctx.strokeStyle="#ff1493";  // OUTLINE COLOR
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.bezierCurveTo(x-size/2,y-size/2,
+                      x-size,y+size/3,
+                      x,y+size);
+    ctx.bezierCurveTo(x+size,y+size/3,
+                      x+size/2,y-size/2,
+                      x,y);
+    ctx.stroke();   // STROKE ONLY (NO FILL)
+
+    ctx.shadowBlur=0;
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    hearts.forEach(function(h){
+        drawHeart(h.x,h.y,h.size);
+        h.y+=h.speed;
+
+        if(h.y>canvas.height){
+            h.y=-20;
+            h.x=Math.random()*canvas.width;
+        }
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
